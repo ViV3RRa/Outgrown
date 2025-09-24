@@ -8,18 +8,7 @@ import { ShoesIcon } from './ShoesIcon';
 import { AccessoryIcon } from './AccessoryIcon';
 import { BodyIcon } from './BodyIcon';
 
-export { TshirtIcon } from './TshirtIcon';
-export { PantsIcon } from './PantsIcon';
-export { SocksIcon } from './SocksIcon';
-export { DressIcon } from './DressIcon';
-export { JacketIcon } from './JacketIcon';
-export { UnderwearIcon } from './UnderwearIcon';
-export { ShoesIcon } from './ShoesIcon';
-export { AccessoryIcon } from './AccessoryIcon';
-export { BodyIcon } from './BodyIcon';
-
-// Map category keys to their corresponding icons
-// eslint-disable-next-line react-refresh/only-export-components
+// Non-component export file to satisfy React Fast Refresh constraints.
 export const categoryIcons = {
   sokker: SocksIcon,
   trøjer: TshirtIcon,
@@ -31,3 +20,5 @@ export const categoryIcons = {
   sko: ShoesIcon,
   tilbehør: AccessoryIcon,
 };
+
+export type CategoryIconKey = keyof typeof categoryIcons;

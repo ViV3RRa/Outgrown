@@ -7,7 +7,7 @@ import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle, SheetDescri
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import { Heart, Filter, Plus } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
-import { categoryIcons } from './icons/index';
+import { categoryIcons } from './icons/map';
 import { AddClothingForm } from './AddClothingForm';
 import { ClothingDetailView } from './ClothingDetailView';
 
@@ -46,6 +46,7 @@ const categoryColors = {
   kjoler: '#f59e0b',
   jakker: '#ef4444',
   undertøj: '#ec4899',
+  body: '#f97316',
   sko: '#84cc16',
   tilbehør: '#6366f1'
 };
@@ -182,6 +183,9 @@ export function ClothingInventory({ items, onDeleteItem, children, onAddClothing
                 <Badge variant="outline" className="text-xs border-emerald-200 text-emerald-700 flex items-center gap-1">
                   {(() => {
                     const IconComponent = categoryIcons[item.category as keyof typeof categoryIcons];
+                    if (!IconComponent) {
+                      return <span className="w-3 h-3 inline-block">?</span>;
+                    }
                     return (
                       <IconComponent
                         className="w-3 h-3"

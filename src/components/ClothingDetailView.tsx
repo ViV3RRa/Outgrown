@@ -9,7 +9,7 @@ import { Card, CardContent } from './ui/card';
 import { Badge } from './ui/badge';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import { X, Edit2, Trash2, Heart, ChevronLeft, ChevronRight, Save, XCircle, Baby } from 'lucide-react';
-import { categoryIcons } from './icons/index';
+import { categoryIcons } from './icons/map';
 
 interface ClothingDetailViewProps {
   item: ClothingItem;
@@ -144,7 +144,11 @@ export function ClothingDetailView({ item, children, onClose, onUpdate, onDelete
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary/20 to-accent/30 flex items-center justify-center shadow-lg">
-              <IconComponent className="w-6 h-6 text-primary" />
+              {IconComponent ? (
+                <IconComponent className="w-6 h-6 text-primary" />
+              ) : (
+                <span className="w-6 h-6 inline-flex items-center justify-center text-primary">?</span>
+              )}
             </div>
             <div>
               <h2 className="text-xl font-semibold text-foreground">
@@ -416,10 +420,14 @@ export function ClothingDetailView({ item, children, onClose, onUpdate, onDelete
                     Str. {item.size}
                   </Badge>
                   <Badge variant="outline" className="text-sm border-emerald-200 text-emerald-700 flex items-center gap-2 px-3 py-2">
-                    <IconComponent
-                      className="w-4 h-4"
-                      color={categoryColors[item.category as keyof typeof categoryColors]}
-                    />
+                    {IconComponent ? (
+                      <IconComponent
+                        className="w-4 h-4"
+                        color={categoryColors[item.category as keyof typeof categoryColors]}
+                      />
+                    ) : (
+                      <span className="w-4 h-4 inline-block">?</span>
+                    )}
                     {categoryLabels[item.category]}
                   </Badge>
                   <Badge variant="outline" className="text-sm border-amber-200 text-amber-700 px-3 py-2">

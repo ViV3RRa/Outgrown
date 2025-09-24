@@ -8,7 +8,7 @@ import { Card, CardContent } from './ui/card';
 import { api, DANISH_SIZES, getChildSizes, getAvailableCategoriesForChild, type Child, type ClothingItem } from '../services/api';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import { Upload, X, Camera, Heart, ShirtIcon, Baby } from 'lucide-react';
-import { categoryIcons } from './icons/index';
+import { categoryIcons } from './icons/map';
 
 interface AddClothingFormProps {
   childId?: string; // Made optional - can be unassigned
@@ -371,10 +371,14 @@ export function AddClothingForm({ childId, children, onSuccess, onCancel }: AddC
                       return (
                         <SelectItem key={cat.value} value={cat.value}>
                           <div className="flex items-center gap-2">
-                            <IconComponent
-                              className="w-4 h-4"
-                              color={categoryColors[cat.value as keyof typeof categoryColors]}
-                            />
+                            {IconComponent ? (
+                              <IconComponent
+                                className="w-4 h-4"
+                                color={categoryColors[cat.value as keyof typeof categoryColors]}
+                              />
+                            ) : (
+                              <span className="w-4 h-4 inline-block">?</span>
+                            )}
                             {cat.label}
                           </div>
                         </SelectItem>
