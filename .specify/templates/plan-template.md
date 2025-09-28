@@ -49,6 +49,19 @@
 
 [Gates determined based on constitution file]
 
+**State Management (Redux + TanStack Query) Gates**:
+- Server state MUST remain in TanStack Query (no duplication in Redux slices).
+- Proposed global client state MUST justify Redux usage (shared across disjoint UI branches, session/prefs, or cross-query orchestration).
+- Persisted slices MUST be explicitly whitelisted; no large remote collection mirrors.
+- Persist config version MUST increment when persisted slice shape changes with a migration plan.
+- Selectors MUST be exported for any state consumed outside its slice file.
+
+**API Layer Gates**:
+- Each remote operation listed with corresponding `*-api.ts` function name.
+- No direct `fetch`/`axios`/`Request` usage planned inside hooks/components.
+- Hook responsibilities: client-side caching/orchestration only; transport & path composition isolated in API module.
+- Error normalization occurs in API layer or a shared error utility—not ad-hoc in components.
+
 ## Project Structure
 
 ### Documentation (this feature)
@@ -168,19 +181,18 @@ directories captured above]
 **Task Generation Strategy**:
 - Load `.specify/templates/tasks-template.md` as base
 - Generate tasks from Phase 1 design docs (contracts, data model, quickstart)
-- Each contract → contract test task [P]
-- Each entity → model creation task [P] 
-- Each user story → integration test task
-- Implementation tasks to make tests pass
+- Each entity → model/state slice task [P]
+- Each required remote operation → query or mutation hook task [P]
+- UI assembly tasks referencing hooks/selectors
+- Manual QA verification task list (replaces automated tests)
 
 **Ordering Strategy**:
-- TDD order: Tests before implementation 
-- Dependency order: Models before services before UI
+- Schema & state before hooks; hooks before UI integration; integration before polish/QA
 - Mark [P] for parallel execution (independent files)
 
-**Estimated Output**: 25-30 numbered, ordered tasks in tasks.md
+**Estimated Output**: 18-25 numbered, ordered tasks in tasks.md
 
-**IMPORTANT**: This phase is executed by the /tasks command, NOT by /plan
+**IMPORTANT**: No automated test scaffolding—manual QA section appended instead.
 
 ## Phase 3+: Future Implementation
 *These phases are beyond the scope of the /plan command*
@@ -216,4 +228,4 @@ directories captured above]
 - [ ] Complexity deviations documented
 
 ---
-*Based on Constitution v2.1.1 - See `/memory/constitution.md`*
+*Based on Constitution v2.2.0 - See `/memory/constitution.md`*
